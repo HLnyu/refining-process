@@ -1,0 +1,6 @@
+import{readFileSync,writeFileSync}from 'node:fs';
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const blocks=readFileSync('dist/concept-report.md','utf8').replace(/\r\n/g,'\n').trim().split(/\n\s*\n/);
+const body=blocks.map(b=>b.startsWith('# ')?`<h1>${esc(b.slice(2))}</h1>`:b.startsWith('## ')?`<h2>${esc(b.slice(3))}</h2>`:b.startsWith('- ')?`<ul>${b.split('\n').map(l=>`<li>${esc(l.slice(2))}</li>`).join('')}</ul>`:`<p>${esc(b)}</p>`).join('\n');
+writeFileSync('dist/concept-report.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>多功能精炼床 · 概念设计总结报告</title><link rel="stylesheet" href="./concept.css"></head><body><header><a class="brand" href="./bed.html">精炼床研究工作台</a><nav><a href="./concept.html">概念设计台</a><a href="./evidence/index.html">数据支持库</a><a href="./concept-report.md" download>下载报告 Markdown</a></nav></header><main class="report"><p class="eyebrow">DESIGN MEMO / 2026.10.27</p><p class="lead">把新设备的可能性展开，把待验证的问题留下。</p><button onclick="window.print()">打印／另存 PDF</button>${body}<p><a href="./concept.html">进入概念设计台 →</a></p></main></body></html>`);
+console.log('Concept summary report HTML generated from Markdown.');

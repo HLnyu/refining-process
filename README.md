@@ -1,5 +1,7 @@
 # 连续精炼床研究工作台
 
+新增 `dist/concept.html` 概念设计台，入口位于主工作台顶部。支持任务组合、主流／单区旁路／局部循环草图、并行辅助方式、证据和筛选状态、本地方案及 JSON 备份。总结报告为 `dist/concept-report.html`，可打印为 PDF；可编辑源文为 `dist/concept-report.md`，修改后运行 `node render-concept-report.mjs` 同步网页。该页面不生成处理效率，也未自动转换到定量模型。
+
 唯一维护目录：**D:\Steelmaking\refining-process-lab\refining-process**。以后的代码都在此修改，直接通过GitHub Desktop管理本目录，并由Cloudflare发布；不再默认生成ZIP。`release/` 中的旧文件仅作历史交付记录。
 
 当前版本是可追溯的条件评价原型，支持连续槽几何/流量、主体区段、并行喷吹/扒渣/补热、目标差距和方案比较。尚无本连续床工业标定，不能认证产品质量或保证设备产能。

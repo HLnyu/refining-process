@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>精炼床概念设计台 · 头脑风暴</title><link rel="stylesheet" href="./concept.css"><script type="module" src="./concept.mjs"></script></head><body>
+<header><a class="brand" href="./bed.html">精炼床研究工作台</a><nav><a href="./bed.html">定量评价</a><a href="./evidence/index.html">数据支持库</a><a href="./concept-report.html">总结报告</a></nav></header>
+<main><div class="intro"><div><p class="eyebrow">CONCEPT STUDIO / 01</p><h1>先展开可能，再逐步论证。</h1><p>按任务搭建一套多功能精炼床。允许不确定，保留每个想法的依据与疑问。</p></div><a class="report-link" href="./concept-report.html">阅读设计逻辑报告 ↗</a></div>
+<div class="notice">概念草稿：设备名称代表借鉴对象。布置长度不代表真实设备尺寸；当前不计算脱除率、终点成分或工程可行性。</div>
+<section class="planbar" aria-label="方案管理"><label>当前方案 <select id="plans"></select></label><button id="new">新建空白</button><button id="copy">复制方案</button><button id="export">导出 JSON</button><button id="import">导入 JSON</button><input id="file" type="file" accept="application/json" hidden><span id="save-status" role="status"></span></section>
+<details class="brief"><summary>设计意图与边界 <span>来料 · 产品 · 核心构想</span></summary><div id="brief"></div></details>
+<div class="workspace"><aside class="library"><p class="eyebrow">01 / 任务库</p><h2>添加一个功能</h2><p class="muted">点击加入主流，再选择手段。设备依据来自现有数据包。</p><label>搜索任务<input id="search" type="search" placeholder="脱硫、真空、LF…"></label><div id="catalog"></div></aside>
+<section class="board" aria-labelledby="board-title"><div class="section-head"><div><p class="eyebrow">02 / 流程草图</p><h2 id="board-title">钢水向右，构想向外。</h2></div><span class="tag">所有区段连续流过</span></div><div id="flow"></div><div class="legend">上层：喷吹／加料／扒渣　下层：补热／测控。辅助操作与所在区段并行。</div><div id="overview"></div></section>
+<aside class="editor"><p class="eyebrow">03 / 当前构想</p><div id="editor"></div></aside></div>
+<section class="review"><div class="section-head"><div><p class="eyebrow">04 / 下一轮论证</p><h2>把问题留在方案里。</h2></div><a href="./bed.html">进入独立定量工作台 ↗</a></div><div id="review"></div><p class="muted">此处的检查是规则提示，不是冶金计算或安全审查；方案尚未自动映射到定量模型。</p></section>
+</main><footer>构想 → 功能 → 条件兼容 → 连续化 → 守恒核算 → 仿真与试验。数据仅保存在当前浏览器，可导出备份。</footer></body></html>

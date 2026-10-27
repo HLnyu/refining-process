@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import{makePlan,makeZone,summarize,validatePlan,TASKS}from './dist/concept-model.mjs';
+const equipment=JSON.parse(readFileSync('dist/evidence/downloads/core-data.json','utf8')).equipment;
+for(const t of TASKS)for(const id of t.refs)assert(equipment.some(e=>e.equipment_id===id),`Missing reference ${id}`);
+const p=makePlan();const a=makeZone('dephos'),b=makeZone('desulfur'),c=makeZone('degas');p.zones=[a,b,c];c.lane='side';c.anchor=a.id;
+validatePlan(p);let s=summarize(p);assert.equal(s.mainLength,3);assert.equal(s.otherLength,1.5);assert(s.issues.some(x=>x.includes('渣系隔离')));assert(s.issues.some(x=>x.includes('压差液位')));
+a.status='暂缓';s=summarize(p);assert.equal(s.mainLength,1.5);assert(s.issues.some(x=>x.includes('有效主流区段')));assert(!s.tasks.includes('dephos'));
+const invalid=structuredClone(p);invalid.zones[0].length=.75;assert.throws(()=>validatePlan(invalid));invalid.zones[0].length=1.5;invalid.zones[1].id=invalid.zones[0].id;assert.throws(()=>validatePlan(invalid));
+console.log('PASS concept reference integrity, parallel/branch length, inactive exclusion, connection qualification and import guards');
