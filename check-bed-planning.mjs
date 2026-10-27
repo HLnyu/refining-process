@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {defaults,evaluate} from './dist/bed-model.mjs';
+import {summarizePlan} from './dist/bed-planning.mjs';
+const config=defaults(),snap=JSON.stringify(config),empty=summarizePlan(config);
+assert.equal(JSON.stringify(config),snap);assert.ok(empty.coverage.missing.includes('S'));assert.equal(empty.thermal.finalC,null);assert.equal(empty.flowScenarios.length,3);assert.equal(empty.flowScenarios[1].flowTph,config.flowTph);
+config.modules=[{id:'lf',type:'LF',lengthM:1,flowModel:'PFR',species:'S',kPerMin:null,equilibrium:null,heatingEnabled:false,blowingMode:'none',skimmingEnabled:true,slagRemovalKgT:1,powderKgMin:0,alloyKgT:0}];
+const r=evaluate(config),plan=summarizePlan(config,r);assert.equal(plan.objectives.find(x=>x.key==='S').status,'unknown');assert.equal(plan.overlays.skimming,1);assert.equal(plan.flow.throughMin,r.geometry.residenceMin);assert.ok(plan.requiredInputs.some(x=>x.includes('速率系数')));assert.equal(plan.resources.slagRemovalKgh,config.flowTph);
+config.modules[0].kPerMin=1;config.modules[0].equilibrium=0;const known=summarizePlan(config);assert.equal(known.objectives.find(x=>x.key==='S').status,'pass');assert.equal(known.capability.limitBasis,'local_segment_targets_not_global_optimum');assert.ok(known.flowScenarios[0].throughMin>known.flowScenarios[2].throughMin);assert.ok(known.objectives.find(x=>x.key==='S').removalNeededKgT>0);
+config.targetOutletC=1600;assert.equal(summarizePlan(config).thermal.gapK,null);
+assert.equal(summarizePlan({...config,flowTph:0}).valid,false);
+console.log('Goal coverage, unknown propagation, parallel accounting, flow scenarios, purity and local-capacity qualification passed');

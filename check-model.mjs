@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {initialState,moduleOf,simulate,validate,GRADES} from './dist/model.mjs';
+let passed=0;function test(name,fn){fn();passed++;console.log('PASS '+name);}
+test('all grade recipes produce finite nonnegative values',()=>{for(const g of Object.keys(GRADES)){const s=initialState(g),r=simulate(s);assert.deepEqual(r.errors,[]);for(const n of Object.values(r.final))assert(Number.isFinite(n)&&n>=0);assert(Math.abs(r.rows.reduce((a,r)=>a+r.duration,0)-r.time)<1e-9);}});
+test('VD alone does not remove sulfur; reduces hydrogen',()=>{const s=initialState();s.modules=[moduleOf('VD')];const r=simulate(s);assert.equal(r.final.S,s.initial.S);assert(r.final.H<s.initial.H);});
+test('VD coupled desulfurization requires valid preceding slag',()=>{const s=initialState();const vd=moduleOf('VD');vd.desulf=true;s.modules=[vd];assert.equal(simulate(s).final.S,s.initial.S);s.modules=[moduleOf('LF'),vd];const r=simulate(s);assert(r.rows.at(-1).sDelta>0);});
+test('sulfur is conserved between steel and carried slag',()=>{const s=initialState();const vd=moduleOf('VD');vd.desulf=true;s.modules=[moduleOf('LF'),vd,moduleOf('LF')];const r=simulate(s);const initial=s.initial.S/1e6*s.batch*1000;const final=r.final.S/1e6*s.batch*1000+r.slagSkg;assert(Math.abs(initial-final)<1e-9);});
+test('VD published gas arithmetic has correct total and per tonne',()=>{const s=initialState();s.includeEAF=false;s.batch=105;s.modules=[moduleOf('VD')];const r=simulate(s);assert.equal(r.argon,4.68);assert(Math.abs(r.argon/s.batch-.0445714285714)<1e-10);assert.equal(r.time,25);assert.equal(r.rows[0].gasTime,18);});
+test('RH powder duration is nested, not added twice',()=>{const s=initialState();s.includeEAF=false;s.batch=120;const rh=moduleOf('RH');rh.time=8;rh.powderEnabled=true;s.modules=[rh];const r=simulate(s);assert.equal(r.time,15);assert.equal(r.materials.find(x=>x.name==='脱硫粉（配方待定）').qty,480);assert.equal(r.rawArgon,16.8);assert.equal(r.argon,0);});
+test('invalid powder timing is rejected',()=>{const s=initialState();const m=moduleOf('RH');m.powderTime=40;s.modules=[m];assert(validate(s).some(e=>e.includes('喷粉时间')));});
+test('negative, blank, zero batch inputs cannot enter calculations',()=>{for(const n of [-1,0,NaN]){const s=initialState();s.batch=n;assert(simulate(s).errors.length);}const s=initialState();s.initial.S=-1;assert(simulate(s).errors.length);});
+test('no oxygen means no AOD decarburization',()=>{const s=initialState('SS304');const m=moduleOf('AOD');m.oxygen=0;s.modules=[m];assert.equal(simulate(s).final.C,s.initial.C);});
+test('zero blowing produces zero VD hydrogen removal',()=>{const s=initialState();const m=moduleOf('VD');m.gas=0;s.modules=[m];assert.equal(simulate(s).final.H,s.initial.H);});
+test('calcium treatment does not falsely remove S or O',()=>{const s=initialState();s.modules=[moduleOf('CA')];const r=simulate(s);assert.equal(r.final.S,s.initial.S);assert.equal(r.final.O,s.initial.O);});
+test('empty downstream route supports boundary-only estimates',()=>{const s=initialState();s.modules=[];s.includeEAF=false;const r=simulate(s);assert.equal(r.time,0);assert.equal(r.solidKg,0);assert.deepEqual(r.final,s.initial);});
+test('removal models cannot create C H or O from zero input',()=>{for(const type of ['LF','VD','RH','AOD','VOD','SOFT']){const s=initialState();s.initial={C:0,S:0,H:0,N:0,O:0};s.modules=[moduleOf(type)];const r=simulate(s);assert.equal(r.final.H,0);assert.equal(r.final.O,0);assert.equal(r.final.C,0);}});
+console.log(`${passed} model checks passed.`);

@@ -1,0 +1,12 @@
+.sites-runtime/
+node_modules/
+*.log
+release/
+.wrangler/
+.env
+.env.*
+!.env.example
+__pycache__/
+uploads/
+jobs/
+solver-results/

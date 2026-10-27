@@ -1,0 +1,22 @@
+﻿equipment_id,name,scope,functions,temperature_rule,time_rule,source_ids_json,status
+TAP,BOF/EAF出钢挡渣,core,建立钢/渣/温度初始条件,实测出钢温度曲线；不设通用固定值,出钢钢重曲线积分；加入事件可重叠,"[""S06"", ""S25""]",catalog_only
+SKIM,扒渣/改渣,core,减少携渣氧化物和调整渣量,继承钢包热平衡,实际扒渣与作业耗时,"[""S03"", ""S17""]",catalog_only
+AR,吹氩站,core,混匀、成分微调、去夹杂,M18分段温降,M09混匀＋去夹杂独立约束,"[""S01"", ""S05""]",catalog_only
+LF,钢包炉,core,加热、造渣、脱氧、脱硫、合金化,M18/M19；SPHC案例1595±5℃不通用,通电/混匀/软吹/取样/等待区分,"[""S10"", ""S11"", ""S19""]",catalog_only
+CAS,密封吹氩成分调整,core_optional,合金微调与保护,热平衡；无氧化补热时只计热损,材料溶解/混匀及调度,"[""S18""]",catalog_only
+CASOB,密封吹氧补热,core_optional,铝氧化化学升温,反应热+包衬热损联算,吹氧/供铝/还原阶段分别计算,"[""S18""]",catalog_only
+RH,真空循环精炼,core_optional,脱碳、脱气、成分微调,M18/M19按路线逆算,抽空/脱碳/最终脱氧合金化/循环时间,"[""S12"", ""S13"", ""S14""]",catalog_only
+RHOB,RH-OB/RH-TOP,core_optional,强制脱碳与化学补热,吹氧反应热与材料热效应,供氧和真空曲线分段,"[""S12"", ""S13""]",catalog_only
+VD,真空罐脱气,core_optional,重点脱氢及气体控制,真空期间净热损,抽空/保压/破空/软吹分开,"[""S07""]",catalog_only
+VAD,真空加热精炼,extension,特定配置真空与加热,按配置电热平衡,真空与加热事件图,"[""S26""]",catalog_only
+WIRE,喂丝站,core_optional,Ca/Al/C/微合金控制,喂入温降、释放及反应热,长度/速度＋后续混匀,"[""S30""]",catalog_only
+POWDER,喷粉站/RH喷粉,extension,强化界面反应,粉料热效应和载气损失,粉速积分，载气与提升气分开,"[""S08"", ""S22""]",catalog_only
+SOFT,软吹与静置,core,最终均匀与夹杂去除,M18温降；包盖/渣层状态,相应设备模型和质量检测终止,"[""S01"", ""S16""]",catalog_only
+TRANSFER,钢包运输/等候/保温,core,工序连接,包衬热史、加盖与等待持续时间,调度事件日志,"[""S11"", ""S19""]",catalog_only
+TD,中间包,core,缓冲、分流、去夹杂,液相线+过热度；首炉/稳态分开,RTD分布而非单一停留时间,"[""S20"", ""S21""]",catalog_only
+TDHEAT,中间包感应/等离子加热,core_optional,稳定过热度,功率与温度反馈热平衡,按浇注时间连续控制,"[""S21""]",catalog_only
+CC,连铸/EMS/软压下,core,凝固质量和断面,液相线、固相线、二冷热传导,钢重/流量与拉速、断面、流数联算,"[""S20""]",catalog_only
+INGOT,模铸/真空浇注,extension,大型锭坯,液相线与补缩凝固计算,浇注曲线及凝固仿真,"[""S27""]",catalog_only
+AODVOD,AOD/VOD,outside_core,不锈钢脱碳保铬,按钢种分阶段热化学平衡,吹氧/还原/脱硫阶段,"[""S26""]",catalog_only
+VIMESRVAR,VIM/ESR/VAR,outside_core,特种熔炼与重熔,独立合金体系和熔池模型,熔速/电极质量/凝固模型,"[""S27""]",catalog_only
+ROLLHT,轧制/锻造/控冷/退火/淬回火/涂镀,downstream_interface,最终组织与性能,相变与传热模型；待专项建库,厚度/线速/保温及相变时间；尚未实现,[],catalog_only

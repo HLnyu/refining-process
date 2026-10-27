@@ -1,0 +1,14 @@
+{
+  "name": "continuous-steel-refining-bed",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "test": "node run-checks.mjs",
+    "build": "node verify-static.mjs"
+  }
+}
+
+
+

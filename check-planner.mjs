@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {initialState} from './dist/model.mjs';
+import {planRoutes,inverseTime} from './dist/planner.mjs';
+assert.equal(inverseTime(100,100,10,.1),0);
+assert.equal(inverseTime(100,10,10,.1),Infinity);
+assert.ok(Math.abs(inverseTime(100,10+90/Math.E,10,.1)-10)<1e-9);
+const s=initialState(),before=JSON.stringify(s),p=planRoutes(s);
+assert.equal(JSON.stringify(s),before);assert.equal(p.candidates.length,3);
+assert.ok(p.candidates.every(c=>c.result.errors.length===0&&c.result.time>0));
+const n=structuredClone(s);n.targets.N=1;assert.ok(planRoutes(n).candidates.every(c=>c.failed.some(a=>a.key==='N')));
+const low=structuredClone(s);low.initial.C=.01;assert.ok(planRoutes(low).candidates.every(c=>c.failed.some(a=>a.key==='C')));
+const hard=structuredClone(s);hard.targets.S=.001;assert.ok(planRoutes(hard).candidates.every(c=>c.failed.some(a=>a.key==='S')));
+const invalid=structuredClone(s);invalid.batch=0;assert.ok(planRoutes(invalid).errors.length);
+console.log('Planner: 9 checks passed; bounded 18 simulations per comparison.');

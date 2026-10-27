@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-27",
+  "overallLabel": "条件评价原型，非工业认证模型",
+  "sections": [
+    {"id":"geometry","label":"几何与连续流","status":"implemented","summary":"圆弓截面、钢液存量、表面积、质量流量及平均通过时间已有守恒计算。","missingInputs":["实际密度与几何尺寸"],"limitations":["定密度、稳态、等截面假设；未计算RTD、短路流和死区。"]},
+    {"id":"resources","label":"气粉、扒渣和能耗账","status":"conditional","summary":"支持顶底吹分气种与单耗；并行操作共享宿主床长和通过时间。","missingInputs":["实际投入速率、气体标况、粉料及合金化验、扒渣量"],"limitations":["投入账不等于反应收得率或完整钢渣气物料平衡。"]},
+    {"id":"chemistry","label":"精炼化学与终点","status":"conditional","summary":"支持显式速率和极限浓度下的一阶理想反应器情景；对可用氧与真空条件作约束。","missingInputs":["适用工况的速率系数、活度或平衡值、渣系、压力及独立校准数据"],"limitations":["未联立完整热力学、Al–O–渣–夹杂网络；未实现全元素主动脱除及夹杂粒径演化。"]},
+    {"id":"thermal","label":"热量与温度","status":"conditional","summary":"按表面分区热流、有效加热、质量流量和比热求稳态温差。","missingInputs":["实际热流密度、分区覆盖率、比热、液相线、加热效率或测温"],"limitations":["未求耐材启动蓄热、凝固潜热、一般反应热、热损随温度变化与三维温度场。"]},
+    {"id":"planning","label":"目标、约束与搭配评价","status":"conditional","summary":"按用户目标列出净去除任务、承担区段、目标差距、流量情景与本地方案对比。","missingInputs":["产品目标版本和各区有效模型参数"],"limitations":["没有全局工艺优化、生产排队、多设备瓶颈和订单性能预测；局部上限不是整厂达标产能。"]},
+    {"id":"evidence","label":"文献证据与软件核查","status":"implemented","summary":"合并数据保留来源、工况、单位及隔离记录；已提供计算边界和回归检查。","missingInputs":[],"limitations":["本轮没有重新审计全部论文原文，软件检查不代替工业验证。"]},
+    {"id":"validation","label":"实炉标定与预测区间","status":"missing","summary":"尚无本连续床的独立工业校准或域外验证。","missingInputs":["炉次时序、起终点取样、能耗与流量记录、设备及化验方法、训练/验证划分"],"limitations":["不得声明预测精度、置信区间或产品合格保证。"]},
+    {"id":"integration","label":"GPT、CAD、Fluent执行链","status":"missing","summary":"本版提供接入架构与接口规划，未连接外部执行服务。","missingInputs":["后端服务、模型配置、CAD内核、Fluent安装与许可证、计算资源"],"limitations":["当前没有真实GPT调用、图纸自动转CAD或Fluent求解任务。"]}
+  ]
+}

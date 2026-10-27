@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#152a32">
+  <meta name="description" content="普钢出钢后精炼的核心数据支持库：可追溯工艺参数、路线、动力学模型和数据下载。">
+  <title>炼钢精炼 · 核心数据支持库</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/data.js"></script><script defer src="assets/logic.js"></script><script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="#overview"><span class="brand-mark">Fe<span>26</span></span><span>精炼数据支持库<small>STEEL REFINING EVIDENCE</small></span></a>
+    <div class="workspace-label">研究工作台 <span>v0.1</span></div>
+    <nav aria-label="主要导航"><a href="../bed.html">← 连续精炼床预测框架</a><a href="../laboratory.html">原精炼流程实验室</a>
+      <a href="#overview" data-nav="overview"><span class="nav-number">01</span>证据总览<span class="nav-end">↗</span></a>
+      <a href="#routes" data-nav="routes"><span class="nav-number">02</span>工艺路线</a>
+      <a href="#evidence" data-nav="evidence"><span class="nav-number">03</span>参数证据<span class="nav-count" id="nav-evidence-count">221</span></a>
+      <a href="#models" data-nav="models"><span class="nav-number">04</span>模型与公式</a>
+      <a href="#sources" data-nav="sources"><span class="nav-number">05</span>来源文献</a>
+      <a href="#downloads" data-nav="downloads"><span class="nav-number">06</span>核心数据包</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="signal"><i></i> 可追溯的研究数据</div><p>来源、工况、公式与适用边界，保留在同一条证据链中。</p><a href="#downloads" class="sidebar-download">获取核心支持包 <span>↓</span></a><div class="sidebar-date">更新于 2026.10.26</div></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div class="breadcrumb">炼钢研究 <span>/</span> <strong id="crumb">证据总览</strong></div><form id="global-form" class="global-search" role="search"><label class="sr-only" for="global-search">搜索钢种、参数或来源</label><input id="global-search" placeholder="搜索钢种、参数或来源…" autocomplete="off"><kbd>Ctrl K</kbd></form><a href="downloads/core-support-pack.zip" class="top-download" download>下载数据包 <span>↓</span></a></header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="footer"><span>精炼数据支持库 · 研究版本 0.1</span><span>文献证据 ≠ 生产设定 · 所有模型需按目标设备校准</span></footer>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><span class="eyebrow" id="dialog-type">证据详情</span><button class="icon-button" id="dialog-close" aria-label="关闭详情">×</button></div><div id="dialog-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript><p>此网页需要JavaScript呈现筛选。可直接<a href="downloads/core-support-pack.zip">下载核心数据包</a>。</p></noscript>
+</body></html>
+

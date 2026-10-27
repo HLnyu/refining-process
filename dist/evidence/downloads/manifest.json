@@ -1,0 +1,134 @@
+{
+  "version": "0.1",
+  "built_on": "2026-10-26",
+  "metadata": {
+    "version": "0.1",
+    "built_on": "2026-10-26",
+    "window": [
+      "2016-10-26",
+      "2026-10-26"
+    ],
+    "source_database_sha256": "4351d35e0eb169181cdea6eff48b8232a7e4934a2eca09248e020398547f473b",
+    "core_records": 207,
+    "all_records": 221,
+    "historical_records": 11,
+    "quarantined_records": 3,
+    "industrial_heats": 8,
+    "implemented_models": 21,
+    "tests_passed": 43,
+    "industrial_calibrations": 0,
+    "definition": "核心参考集排除U及明确历史复用记录；仍需核对研究类型、气量口径及适用工况，不能直接充当生产设定。"
+  },
+  "files": [
+    {
+      "file": "all-observations.csv",
+      "bytes": 132697,
+      "sha256": "8f13ea6c1e070d81da3418cba801e36bf54ac5d83ecbd0a8fb24b01b092ab788"
+    },
+    {
+      "file": "cases.csv",
+      "bytes": 5882,
+      "sha256": "36f85225133805bd034c61434628463d522a18405ab2bef172dd6a808929621f"
+    },
+    {
+      "file": "core-data.json",
+      "bytes": 395957,
+      "sha256": "e0065af6c718a3804b9072e39c6d3acea71648eec7082a9c11b20832146cedcc"
+    },
+    {
+      "file": "core-observations.csv",
+      "bytes": 124037,
+      "sha256": "494fabd2328719fd4068296925fa4841229e4978c259c3aba0802d8acf76e138"
+    },
+    {
+      "file": "core.sqlite",
+      "bytes": 270336,
+      "sha256": "46fe688b013bf3449d34f5895b5a45c03087f0341af3ef13d567b1fcc9ab04be"
+    },
+    {
+      "file": "database-guide.md",
+      "bytes": 12164,
+      "sha256": "b3898eef1df45a34d90ae33cdf896c2b782c542f5f3c110835c0e3638bf3d39c"
+    },
+    {
+      "file": "equipment.csv",
+      "bytes": 3404,
+      "sha256": "3afbe8ea67a468079f76535dc52d55bd1763919a82b7baeded2e0bb5cddbbe87"
+    },
+    {
+      "file": "historical.csv",
+      "bytes": 6961,
+      "sha256": "52613d87707381a4fa8f8c3fc220642e2d81564803eb21d5896260ded18d4f8d"
+    },
+    {
+      "file": "model-guide.md",
+      "bytes": 19460,
+      "sha256": "038167c1dca380d998b66b4413e9e4e480e3b4d46ef8fda9fa098d94dca5d444"
+    },
+    {
+      "file": "models.csv",
+      "bytes": 10542,
+      "sha256": "e63776eff6c9079864f07fdbc33c38e768c9d0234d4c8997012ac21a775d8f25"
+    },
+    {
+      "file": "models.py",
+      "bytes": 11171,
+      "sha256": "f7b5b628f5cbcb8d8df6281f8c0493b97c1c2c4d659dd955135e6154b7787a48"
+    },
+    {
+      "file": "normalized_observations.csv",
+      "bytes": 10430,
+      "sha256": "850cb83812e99e6017e756ddd27f43298caa09e1ab71a654a8762f54bcabc066"
+    },
+    {
+      "file": "quality-audit.md",
+      "bytes": 5254,
+      "sha256": "b2281b5ffec9291c01ece32542875fdf139d7bd71ef33ce937aa01abf9c911aa"
+    },
+    {
+      "file": "quarantined.csv",
+      "bytes": 2413,
+      "sha256": "2462849594578a0fbb2edbfa74403c80087e822ec1f5b6703a3b6f2fdd2daf1a"
+    },
+    {
+      "file": "reactions.csv",
+      "bytes": 1321,
+      "sha256": "a0b2cb54978dd15c15cfbd83f5fffa436a900b7024e8bff6472464f8985129d7"
+    },
+    {
+      "file": "README.md",
+      "bytes": 1878,
+      "sha256": "d0864fdd7207b52dca65f749dc970290f934e94fcea23e854d9a05d469b97b53"
+    },
+    {
+      "file": "registry.py",
+      "bytes": 21839,
+      "sha256": "d9a8eea6f2bd9e3ffa5237ce70da41a226c128a92b0c3724c1cc19ff85a7a372"
+    },
+    {
+      "file": "routes.csv",
+      "bytes": 1737,
+      "sha256": "88fa2ac05028df969ac62336f4a577303f11f586b3880b0d6c783deebc23c0e7"
+    },
+    {
+      "file": "scenario.py",
+      "bytes": 3186,
+      "sha256": "40605a28d194a40a3fb2ced67ef4f2bf8d3ce39001e1fe7e6c3d9a6a2ea6d271"
+    },
+    {
+      "file": "sources.csv",
+      "bytes": 14027,
+      "sha256": "7b759b090f02f38b1dcd2ab0922249a70bd8b3c079aab36c5bcd03e4b4d4c5cc"
+    },
+    {
+      "file": "test_models.py",
+      "bytes": 7846,
+      "sha256": "72cf982520ab9aa46d192b932956216cafbbb370b02ea04f712592e7a7e220fb"
+    },
+    {
+      "file": "units.csv",
+      "bytes": 1846,
+      "sha256": "72b1b26b4e8c1f9ee8284413e5cb9f1467c93dd69cd70ee7e0acc8fe82b031f5"
+    }
+  ]
+}

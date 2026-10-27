@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="description" content="搭建钢水精炼路线，探索设备、成分、时间与物料的关系。附2022—2025论文依据及可编辑教学模型。">
+ <meta name="theme-color" content="#173d43"><title>炼钢流程实验室 · Steel Refining Lab</title>
+ <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./temperature.css"><link rel="stylesheet" href="./blend.css"><script type="module" src="./app.mjs"></script>
+</head>
+<body>
+ <a class="skip" href="#main">跳到流程工作区</a>
+ <header class="topbar">
+  <a class="brand" href="./" aria-label="炼钢流程实验室首页"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 10h20l-3 16H9zM11 5v7m5-9v9m5-7v7M11 21h10"/></svg></span><span>炼钢流程实验室<small>STEEL REFINING LAB</small></span></a>
+  <div class="top-center"><span class="status-dot"></span>研究工作台 <span class="divider">/</span> 电炉至连铸前</div>
+  <div class="top-actions"><span class="saved" id="saved">本地自动保存</span><button class="button light small" id="export">导出方案 <span aria-hidden="true">↗</span></button></div>
+ </header>
+ <div class="layout">
+  <aside class="sidebar" aria-label="钢种与设备">
+   <div class="side-heading"><span class="overline">01 / 输入条件</span><button class="text-button" id="reset">重置</button></div>
+   <label class="label" for="grade">目标钢种</label><select id="grade"></select>
+   <div class="batch-field"><label for="batch">钢水重量</label><div><input id="batch" type="number" min="1" max="500" step="1"><span>t / 炉</span></div></div>
+   <details class="input-details"><summary>电炉出钢成分 <span>可编辑</span></summary><div id="chem-inputs"></div><p class="muted tiny">此处为电炉出钢值；不计算炉料熔炼过程的成分变化。</p></details>
+   <button class="button recipe" id="recipe">载入该钢种示例流程 <span aria-hidden="true">→</span></button>
+   <div class="library-head"><div><span class="overline">02 / 设备库</span><h2>添加一个工序</h2></div><span class="count" id="module-count">0 / 12</span></div>
+   <p class="muted tiny">点击 ＋ 添加，拖动流程卡片或用箭头调整顺序。</p>
+   <div class="module-library" id="library"></div>
+   <div class="side-foot"><span class="status-dot"></span>近五年论文作为参数参考<br><span>设备效果采用可编辑的简化估算</span></div>
+  </aside>
+  <main id="main" class="workspace">
+   <div class="page-title"><div><p class="overline">PROCESS EXPLORER</p><h1>搭一条路线，看钢水如何变化<span class="title-dot">。</span></h1><p class="subtitle">从设备到成分，再到时间与物料，让每一步都有迹可循。</p></div><div class="version-badge">研究版 <span>v1.0</span></div></div>
+   <p><a class="button light small" href="./bed.html">连续精炼床工作台 ↗</a> <a class="button light small" href="./evidence/index.html">合并数据支持库 ↗</a></p><nav class="tabs" aria-label="工作区视图"><button class="tab active" data-view="builder">流程搭建</button><button class="tab" data-view="planner">起点 → 终点规划</button><button class="tab" data-view="temperature">温度与元素</button><button class="tab" data-view="schedule">时间安排</button><button class="tab" data-view="materials">物料清单</button><button class="tab" data-view="sources">依据与模型 <span>12</span></button><a class="tab" href="./heating.html">加热与热损失 ↗</a></nav>
+   <div class="context-note"><span class="note-icon">i</span><p id="context-note"></p><button class="text-button" id="show-model">查看估算边界 →</button></div>
+   <nav class="blend-entry" aria-label="混合钢水模型入口"><button class="button light small" data-go="blend">混合钢水 → 统一精炼模型 ↗</button><span>多股来料 · 三组产品 · 质量与设备能力核算</span></nav>
+   <section id="blend-view" class="view" hidden><div class="panel full-panel"><div id="blend-root"></div></div></section>
+   <div id="error" class="error" role="alert" hidden></div>
+   <div id="builder-view" class="view">
+    <div class="main-grid">
+     <section class="panel flow-panel" aria-labelledby="flow-heading"><div class="panel-top"><div><span class="section-index">A</span><h2 id="flow-heading">你的精炼路线</h2></div><button id="save-baseline" class="text-button">保存为对比方案</button></div><div class="flow-canvas"><div class="flow-legend"><span><i class="legend-dot green"></i>已添加工序</span><span>流程顺序从左至右</span></div><div id="flow" class="flow-track"></div><div class="canvas-caption"><span id="route-caption"></span><span>点击设备编辑参数</span></div></div><div class="route-warning" id="route-warning"></div></section>
+     <section class="panel summary-panel" aria-labelledby="summary-heading"><div class="panel-top"><div><span class="section-index">B</span><h2 id="summary-heading">连铸前 · 预计状态</h2></div><span class="pill amber">教学估算</span></div><div id="outcome"></div></section>
+     <section class="panel editor-panel" aria-labelledby="editor-heading"><div class="panel-top"><div><span class="section-index">C</span><h2 id="editor-heading">工序参数</h2></div><span class="pill" id="editor-source">可编辑</span></div><div id="editor"></div></section>
+     <section class="panel chart-panel" aria-labelledby="chart-heading"><div class="panel-top"><div><span class="section-index">D</span><h2 id="chart-heading">指标沿流程变化</h2></div><div id="metric-switch" class="metric-switch"></div></div><div id="chart"></div><div id="step-effects" class="step-effects"></div></section>
+    </div>
+    <div id="baseline-result"></div>
+   </div>
+   <section id="planner-view" class="view" hidden><div class="panel full-panel"><div class="panel-top"><h2>成分驱动的候选工艺比较</h2><span class="pill amber">有限搜索 · 教学模型</span></div><div id="planner"></div></div></section><section id="temperature-view" class="view" hidden><div class="panel full-panel"><div class="panel-top"><div><span class="section-index">T</span><h2>温度与目标元素 · 工序说明</h2></div><span class="pill amber">参考窗 ≠ 最佳点</span></div><div id="temperature-guide"></div></div></section>
+   <section id="schedule-view" class="view" hidden><div class="panel full-panel"><div class="panel-top"><div><span class="section-index">E</span><h2>总时间表</h2></div><div><button class="text-button" data-go="temperature">配套温度表 →</button> <button class="text-button print-button">打印 / 保存 PDF</button></div></div><div id="schedule"></div></div></section>
+   <section id="materials-view" class="view" hidden><div class="panel full-panel"><div class="panel-top"><div><span class="section-index">F</span><h2>物料与气体总表</h2></div><button class="text-button" id="export-materials">导出 CSV</button></div><div id="materials"></div></div></section>
+   <section id="sources-view" class="view" hidden><div class="panel full-panel"><div class="panel-top"><div><span class="section-index">G</span><h2>论文依据与模型边界</h2></div><span class="pill">2021.10 — 2026.10</span></div><div id="sources"></div></div></section>
+   <footer class="totals-bar" id="totals"></footer>
+   <p class="page-foot">学习与方案比较工具 · 未运行 CFD、FactSage 或工业标定模型 · 所示目标为研究设定，不构成钢种合格判定</p>
+  </main>
+ </div>
+ <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>
+
+

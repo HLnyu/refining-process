@@ -1,0 +1,11 @@
+﻿route_id,grade_id,steps_json,selection_rule,source_ids_json,status
+RT01,STRUCT,"[""TAP"", ""LF"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",Q355Ti参考，Ti在低氧后加入；按订单决定是否Ca处理,"[""S06""]",evidence_route
+RT02,STRUCT,"[""TAP"", ""LF"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",S355独立案例；不得与Q355配料拼为一炉,"[""S05""]",evidence_route
+RT03,HOTSTRIP,"[""TAP"", ""LF"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",SPHC本厂目标案例，仅作参考,"[""S10""]",evidence_route
+RT04,IF,"[""TAP"", ""LF"", ""RHOB"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",LF可补热；RH强制供氧脱碳，最终脱氧顺序必须保留,"[""S12""]",evidence_route
+RT05,IF,"[""TAP"", ""RH"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",热量及初始C/O满足时的候选；尚未绑定完整炉次,"[""S13"", ""S26""]",evidence_route
+RT06,PIPE,"[""TAP"", ""LF"", ""RH"", ""WIRE"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",工程候选而非统一规定；H/S/夹杂目标决定真空与Ca处理,[],engineering_candidate_not_verified
+RT07,PLATE,"[""TAP"", ""LF"", ""VD"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",工程候选；VD能力不可从105t模型直接移植,"[""S07""]",evidence_route
+RT08,REBAR,"[""TAP"", ""AR"", ""TRANSFER"", ""TD"", ""CC""]",低成本候选，仅在成分温度洁净度均可满足时,[],engineering_candidate_not_verified
+RT09,REBAR,"[""TAP"", ""LF"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",需升温/微合金/成分调整的候选,[],engineering_candidate_not_verified
+RT10,REBAR,"[""TAP"", ""LF"", ""SOFT"", ""TRANSFER"", ""TD"", ""CC""]",HRB400进站渣优化案例，不能把进站氧化物目标当终渣脱硫目标,"[""S33""]",partial_evidence_route
