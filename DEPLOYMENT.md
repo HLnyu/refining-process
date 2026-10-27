@@ -12,13 +12,17 @@
 
 ## Cloudflare Pages（连接 GitHub）
 
-创建 Pages 项目，连接该仓库。框架选 None；构建命令 `npm run build`；输出目录 `dist`；根目录为仓库根目录。入口 index.html 自动进入 bed.html。后续推送由你配置的 Pages 集成部署。
+当前Pages项目为 `steelmakingz`，地址为 `https://steelmakingz.pages.dev/`。默认 `wrangler.jsonc` 使用Pages配置，并以 `pages_build_output_dir: "./dist"` 明确发布目录，不能发布仓库根目录。
+
+连接该仓库，框架选 None；构建命令 `npm run build`；输出目录 `dist`；根目录保持仓库根目录（留空或 `/`，不要填 `dist`）。入口 `dist/index.html` 自动进入 `bed.html`。通过GitHub Desktop提交并Push后，核对Pages生产部署采用最新提交。GitHub Actions检查通过不等于Pages已经部署了同一提交。
+
+若日志出现“配置无效、缺少pages_build_output_dir、Skipping file”，说明Pages没有采用正确配置。若部署成功但首页404，应核对输出目录确实为dist，以及该提交中存在dist/index.html。采用有效Wrangler配置后，输出目录以该配置为准。
 
 也可以直接上传 `dist` 文件夹到 Cloudflare Pages Direct Upload。
 
 ## Cloudflare Workers Static Assets
 
-已附 wrangler.jsonc，assets.directory 指向 dist。安装官方 Wrangler 或使用 `npx wrangler deploy`，按 Cloudflare 的登录流程完成你的账户授权。发布名称可自行修改；无 Worker 服务端脚本或数据库绑定。
+Workers的配置已单独保存在 `wrangler.worker.jsonc`，assets.directory指向dist。只有选择Workers部署时才使用 `npx wrangler deploy --config wrangler.worker.jsonc`。不要把该文件当成Pages的默认配置；当前steelmakingz使用的是Pages。
 
 官方说明（2026-10-27核对）：
 - https://developers.cloudflare.com/pages/framework-guides/deploy-anything/

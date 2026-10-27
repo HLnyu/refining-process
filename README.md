@@ -22,7 +22,7 @@ npm run build
 
 源码目录已有 `package.json`、`wrangler.jsonc`、GitHub Actions检查和 `dist/` 静态网站。已保留本目录原有的Git仓库与 `.gitattributes`，未导入父目录的 `.git`、Sites托管身份或历史交付包。不要提交凭据、用户上传或求解器结果。研究参考数据不含出版社PDF；保留原来源和许可边界。
 
-Cloudflare Pages连接仓库：框架None，构建 `npm run build`，发布目录 `dist`。Workers静态资产使用已有 `wrangler.jsonc`。详见 [DEPLOYMENT.md](DEPLOYMENT.md)。当前没有创建你的GitHub仓库，也没有向你的Cloudflare账户执行部署。
+Cloudflare Pages项目 `steelmakingz` 连接仓库：框架None，构建 `npm run build`，发布目录 `dist`，仓库根目录留空。默认 `wrangler.jsonc` 已指定 `pages_build_output_dir: "./dist"`。Workers备用配置为 `wrangler.worker.jsonc`。详见 [DEPLOYMENT.md](DEPLOYMENT.md)。Cloudflare账户中的部署由GitHub推送触发。
 
 ## 代码入口
 

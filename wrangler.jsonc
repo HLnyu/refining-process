@@ -1,5 +1,5 @@
 {
-  "name": "continuous-steel-refining-bed",
+  "name": "steelmakingz",
   "compatibility_date": "2026-10-27",
-  "assets": { "directory": "./dist" }
+  "pages_build_output_dir": "./dist"
 }
