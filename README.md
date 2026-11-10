@@ -1,5 +1,7 @@
 # 连续精炼床研究工作台
 
+概念页现可直接双击 `dist/concept.html` 打开；修改 `concept.mjs`／`concept-model.mjs` 后运行 `npm run build`，会同步生成 `concept-standalone.js`。支持一个区段叠加多个任务、旁路串联、画板直接删除及撤销、拖动布置、物料吨钢账本和多选补热记录。物料可手填或引用数据包案例，未提供通用设备消耗定额。
+
 新增 `dist/concept.html` 概念设计台，入口位于主工作台顶部。支持任务组合、主流／单区旁路／局部循环草图、并行辅助方式、证据和筛选状态、本地方案及 JSON 备份。总结报告为 `dist/concept-report.html`，可打印为 PDF；可编辑源文为 `dist/concept-report.md`，修改后运行 `node render-concept-report.mjs` 同步网页。该页面不生成处理效率，也未自动转换到定量模型。
 
 唯一维护目录：**D:\Steelmaking\refining-process-lab\refining-process**。以后的代码都在此修改，直接通过GitHub Desktop管理本目录，并由Cloudflare发布；不再默认生成ZIP。`release/` 中的旧文件仅作历史交付记录。

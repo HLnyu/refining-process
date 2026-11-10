@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import{makePlan,makeZone,summarize,validatePlan,TASKS}from './dist/concept-model.mjs';
+import{makePlan,makeZone,summarize,validatePlan,TASKS,setEquipment,materialLedger,migratePlan}from './dist/concept-model.mjs';
 const equipment=JSON.parse(readFileSync('dist/evidence/downloads/core-data.json','utf8')).equipment;
 for(const t of TASKS)for(const id of t.refs)assert(equipment.some(e=>e.equipment_id===id),`Missing reference ${id}`);
 const p=makePlan();const a=makeZone('dephos'),b=makeZone('desulfur'),c=makeZone('degas');p.zones=[a,b,c];c.lane='side';c.anchor=a.id;
@@ -8,3 +8,12 @@ validatePlan(p);let s=summarize(p);assert.equal(s.mainLength,3);assert.equal(s.o
 a.status='暂缓';s=summarize(p);assert.equal(s.mainLength,1.5);assert(s.issues.some(x=>x.includes('有效主流区段')));assert(!s.tasks.includes('dephos'));
 const invalid=structuredClone(p);invalid.zones[0].length=.75;assert.throws(()=>validatePlan(invalid));invalid.zones[0].length=1.5;invalid.zones[1].id=invalid.zones[0].id;assert.throws(()=>validatePlan(invalid));
 console.log('PASS concept reference integrity, parallel/branch length, inactive exclusion, connection qualification and import guards');
+const rh=makeZone('degas');setEquipment(rh,'RH',equipment.find(x=>x.equipment_id==='RH').functions);assert(rh.tasks.includes('alloy'));assert(rh.tasks.includes('degas'));assert(rh.effect.includes('脱气'));
+const draft=makePlan();draft.zones=[rh];rh.materials=[{id:'argon',name:'Ar',unit:'Nm³/t',role:'投入',amount:.1,note:''},{id:'CO',name:'CO',unit:'Nm³/t',role:'过程产出',amount:2,note:''},{id:'powder',name:'粉剂',unit:'kg/t',role:'投入',amount:null,note:''}];
+rh.lane='side';rh.flowFactor=null;let ledger=materialLedger(draft);assert.equal(ledger[0].missing,1);assert(!ledger.some(x=>x.name==='CO'));rh.flowFactor=.25;ledger=materialLedger(draft);assert.equal(ledger[0].known,.025);assert.equal(ledger[1].missing,1);
+rh.lane='cycle';rh.flowFactor=2;assert.equal(materialLedger(draft)[0].known,.2);rh.status='暂缓';assert.equal(materialLedger(draft).length,0);rh.status='待研究';
+rh.heating=[{method:'感应加热',hold:40,eta:60,power:1000,target:1600,note:''},{method:'等离子加热',hold:40,eta:null,power:null,target:null,note:''}];validatePlan(draft);assert.equal(rh.heating.length,2);assert.equal(rh.heating[1].eta,null);
+const legacy=structuredClone(draft);for(const k of ['tasks','capability','supplyNote','materials','heating','flowFactor'])delete legacy.zones[0][k];legacy.zones[0].aux=['感应补热'];validatePlan(legacy);assert.deepEqual(legacy.zones[0].tasks,[legacy.zones[0].task]);assert.equal(legacy.zones[0].heating[0].method,'感应加热');assert.equal(legacy.zones[0].heating[0].eta,null);
+const bad=structuredClone(draft);bad.zones[0].materials[0].amount=-1;assert.throws(()=>validatePlan(bad));bad.zones[0].materials[0].amount=null;bad.zones[0].heating[0].eta=101;assert.throws(()=>validatePlan(bad));
+const unknownGas=structuredClone(draft);unknownGas.zones[0].materials=[...Array(2)].map((_,i)=>({id:String(i),name:'Ar',unit:'m³/t（基准未定）',role:'投入',amount:1,note:''}));assert.equal(materialLedger(unknownGas).length,2);
+console.log('PASS RH stacked functions, per-ton branch/cycle accounting, product-gas exclusion, unknown doses, multi-heater records, legacy migration and invalid data rejection');
